@@ -31,3 +31,20 @@ void print_ip (std::string &number)
 {
     std::cout << number << std::endl;
 }
+
+template<typename T> struct is_container : public std::false_type {};
+
+template<typename T>
+struct is_container<std::vector<T>> : public std::true_type {};
+
+template<typename T>
+typename std::enable_if<is_container<T>::value>::type
+print_ip (T &number)
+{
+    vector_uchar ack;
+    for (auto i: number)
+    {
+        ack.push_back(i);
+    }
+    print(ack);
+}
