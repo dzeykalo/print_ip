@@ -3,4 +3,4 @@ project(print_ip)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(ip_filter_v5 main.cpp print_ip.h)
+add_executable(print_ip main.cpp print_ip.h)

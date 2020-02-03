@@ -8,7 +8,7 @@ int main() {
     std::string str = "45.67.89.101.112.131.41";
     std::vector<int> v = {67,89,101,112,131,41};
     std::list<int> l = {89,101,112,131,41};
-    std::tuple<int,int> t = {66,67};
+    std::tuple<int, int, int, int> t = {101,112,131,41};
 
     /*print_ip(_char);
     print_ip(_short);

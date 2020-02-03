@@ -54,6 +54,7 @@ print_ip (T &number)
     print(ack);
 }
 
+/*
 template<typename T> struct is_tuple : public std::false_type {};
 
 template<typename ...Arg>
@@ -63,8 +64,24 @@ template<typename T>
 typename std::enable_if<is_tuple<T>::value>::type
 print_ip (T &number)
 {
-    for (auto i: number)
-    {
-        std::cout << i << std::endl;
-    }
+  std::cout <<  " is typle" << std::endl;
+}
+*/
+
+template<std::size_t I = 0, typename... Arg>
+typename std::enable_if<I == sizeof...(Arg), void>::type
+print_ip(std::tuple<Arg...> &number)
+{
+  std::cout << std::endl;
+}
+
+template<std::size_t I = 0, typename... Arg>
+typename std::enable_if<I < sizeof...(Arg), void>::type
+print_ip(std::tuple<Arg...>& t)
+{
+  std::cout << std::get<I>(t);
+
+  if (I+1 != sizeof...(Arg))
+    std::cout << ".";
+  print_ip<I + 1, Arg...>(t);
 }
