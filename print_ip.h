@@ -8,31 +8,22 @@
 #include <type_traits>
 #include <tuple>
 
-using vector_uchar = std::vector<unsigned char>;
-
-void print(vector_uchar &ip)
-{
-    std::copy(ip.begin(), ip.end()-1, std::ostream_iterator<int>(std::cout,"."));
-    std::copy(ip.end()-1, ip.end(), std::ostream_iterator<int>(std::cout, "\n"));
-}
-
 template<typename T>
-typename std::enable_if<std::is_integral<T>::value>::type
+typename std::enable_if<std::is_integral<T>::value, std::string>::type
 print_ip (T &number)
 {
-    vector_uchar ack;
+    std::string ack;
     for (int i=(sizeof(number)-1)*8; 0 <= i; i-=8)
     {
         unsigned char bytes = (number >> i) & 0xFF;
-        ack.push_back(bytes);
+        ack += std::to_string(bytes);
+        if (i != 0) ack += ".";
     }
-    print(ack);
+    return ack;
 }
 
-void print_ip (std::string &number)
-{
-    std::cout << number << std::endl;
-}
+std::string print_ip (std::string &number){ return number; }
+
 
 template<typename T> struct is_container : public std::false_type {};
 
@@ -43,45 +34,35 @@ template<typename T>
 struct is_container<std::list<T>> : public std::true_type {};
 
 template<typename T>
-typename std::enable_if<is_container<T>::value>::type
+typename std::enable_if<is_container<T>::value, std::string>::type
 print_ip (T &number)
 {
-    vector_uchar ack;
+    std::string ack;
     for (auto i: number)
     {
-        ack.push_back(i);
+        ack += std::to_string(i);
+        if (i != number.back()) ack += ".";
     }
-    print(ack);
+    return ack;
 }
 
-/*
-template<typename T> struct is_tuple : public std::false_type {};
-
-template<typename ...Arg>
-struct is_tuple<std::tuple<Arg...>> : public std::true_type {};
-
-template<typename T>
-typename std::enable_if<is_tuple<T>::value>::type
-print_ip (T &number)
-{
-  std::cout <<  " is typle" << std::endl;
-}
-*/
 
 template<std::size_t I = 0, typename... Arg>
-typename std::enable_if<I == sizeof...(Arg), void>::type
+typename std::enable_if<I == sizeof...(Arg), std::string>::type
 print_ip(std::tuple<Arg...> &number)
 {
-  std::cout << std::endl;
+  std::string s("\0");
+  return s;
 }
 
 template<std::size_t I = 0, typename... Arg>
-typename std::enable_if<I < sizeof...(Arg), void>::type
+typename std::enable_if<I < sizeof...(Arg), std::string>::type
 print_ip(std::tuple<Arg...>& t)
 {
-  std::cout << std::get<I>(t);
+  std::string s(std::to_string(std::get<I>(t)));
 
   if (I+1 != sizeof...(Arg))
-    std::cout << ".";
-  print_ip<I + 1, Arg...>(t);
+    s += ".";
+  s += print_ip<I + 1, Arg...>(t);
+  return s;
 }

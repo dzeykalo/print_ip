@@ -10,15 +10,14 @@ int main() {
     std::list<int> l = {89,101,112,131,41};
     std::tuple<int, int, int, int> t = {101,112,131,41};
 
-    /*print_ip(_char);
-    print_ip(_short);
-    print_ip(_int);
-    print_ip(_ll);
-    print_ip(str);
-    print_ip(v);
-    print_ip(l);*/
-    print_ip(t);
-
+    std::cout << print_ip(_char) << std::endl;
+    std::cout << print_ip(_short) << std::endl;
+    std::cout << print_ip(_int) << std::endl;
+    std::cout << print_ip(_ll) << std::endl;
+    std::cout << print_ip(str) << std::endl;
+    std::cout << print_ip(v) << std::endl;
+    std::cout << print_ip(l) << std::endl;
+    std::cout << print_ip(t) << std::endl;
 
     return 0;
 }
