@@ -21,10 +21,11 @@ deploy:
     skip_cleanup: true
     script:
       - curl -f -T print_ip-0.0.${TRAVIS_BUILD_NUMBER}-Linux.deb -udzeykalo:${BINTRAY_API_KEY} "https://api.bintray.com/content/dzeykalo/otus-cpp/homework/${TRAVIS_BUILD_NUMBER}/print_ip-0.0.${TRAVIS_BUILD_NUMBER}-Linux.deb;deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publish=1"
+    on:
+      branch: master
   - provider: pages
     skip_cleanup: true
     local_dir: $TRAVIS_BUILD_DIR/html
     github_token: $GITHUB_TOKEN
     on:
       branch: master
-
