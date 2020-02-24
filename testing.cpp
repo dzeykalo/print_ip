@@ -25,8 +25,8 @@ BOOST_AUTO_TEST_SUITE(test_suite)
     }
     BOOST_AUTO_TEST_CASE(test_tuple)
     {
-        std::string s("101.112.131.41");
-        std::tuple<int, int, int, int> t = {101,112,131,41};
+        std::string s("1.255.255.0.0.0.131");
+        std::tuple<char, short, int> t = {1,-1,131};
         BOOST_CHECK( s == print_ip(t) );
     }
 BOOST_AUTO_TEST_SUITE_END()

@@ -59,7 +59,7 @@ template<std::size_t I = 0, typename... Arg>
 typename std::enable_if<I < sizeof...(Arg), std::string>::type
 print_ip(std::tuple<Arg...>& t)
 {
-  std::string s(std::to_string(std::get<I>(t)));
+  std::string s(print_ip(std::get<I>(t)));
 
   if (I+1 != sizeof...(Arg))
     s += ".";
