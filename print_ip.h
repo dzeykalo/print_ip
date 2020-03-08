@@ -46,6 +46,12 @@ print_ip (T &number)
     return ack;
 }
 
+template<std::size_t I = 0, typename T, typename U>
+typename std::enable_if< std::is_same<T, U>::value, std::string>::type
+same_print_ip(T& arg, U u)
+{
+  return print_ip<I>(arg);
+}
 
 template<std::size_t I = 0, typename... Arg>
 typename std::enable_if<I == sizeof...(Arg), std::string>::type
@@ -59,10 +65,43 @@ template<std::size_t I = 0, typename... Arg>
 typename std::enable_if<I < sizeof...(Arg), std::string>::type
 print_ip(std::tuple<Arg...>& t)
 {
-  std::string s(print_ip(std::get<I>(t)));
+  std::string s(same_print_ip(std::get<I>(t), std::get<I>(t)));
 
   if (I+1 != sizeof...(Arg))
     s += ".";
-  s += print_ip<I + 1, Arg...>(t);
+  s += same_print_ip(std::get<I+1>(t), std::get<I>(t));
   return s;
 }
+
+
+/// Remember a good solution ///
+//template <typename... Args>
+//struct is_all_same;
+//
+//template <typename T>
+//struct is_all_same <T> : std::true_type {} ;
+//
+//template <typename T>
+//struct is_all_same <T, T> : std::true_type {} ;
+//
+//template<typename T, typename U, typename... Args>
+//struct is_all_same<T, U, Args...> : std::false_type {};
+//
+//template <typename T, typename... Args>
+//struct is_all_same<T, T, Args...> : is_all_same<T, Args...> {};
+//
+//template <typename... Args>
+//constexpr auto is_all_same_v = is_all_same<Args...>::value;
+
+//template<std::size_t I = 0, typename... Arg>
+//typename std::enable_if<I < sizeof...(Arg), std::string>::type
+//print_ip(std::tuple<Arg...>& t)
+//{
+//  static_assert(is_all_same_v<Arg...>);
+//  std::string s(print_ip(std::get<I>(t)));
+//
+//  if (I+1 != sizeof...(Arg))
+//    s += ".";
+//  s += print_ip<I + 1, Arg...>(t);
+//  return s;
+//}

@@ -8,15 +8,16 @@ int main() {
     std::string str = "45.67.89.101.112.131.41";
     std::vector<int> v = {67,89,101,112,131,41};
     std::list<int> l = {89,101,112,131,41};
-    std::tuple<char, short, int, std::string> t = {-1,0,2130706433,"45.67.89.101.112.131.41"};
+    std::tuple<char, char, char, char> t = {-1,-1,0,0};
+//    std::tuple<short, short> t = {-1,-1};
 
-    std::cout << print_ip(_char) << std::endl;
-    std::cout << print_ip(_short) << std::endl;
-    std::cout << print_ip(_int) << std::endl;
-    std::cout << print_ip(_ll) << std::endl;
-    std::cout << print_ip(str) << std::endl;
-    std::cout << print_ip(v) << std::endl;
-    std::cout << print_ip(l) << std::endl;
+//    std::cout << print_ip(_char) << std::endl;
+//    std::cout << print_ip(_short) << std::endl;
+//    std::cout << print_ip(_int) << std::endl;
+//    std::cout << print_ip(_ll) << std::endl;
+//    std::cout << print_ip(str) << std::endl;
+//    std::cout << print_ip(v) << std::endl;
+//    std::cout << print_ip(l) << std::endl;
     std::cout << print_ip(t) << std::endl;
 
     return 0;
